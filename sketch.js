@@ -1,8 +1,8 @@
 let dots = [];
-let tempMouseX = 0;
-let tempMouseY = 0;
-let tempMouseX2 = 0;
-let tempMouseY2 = 0;
+let tempwinMouseX = 0;
+let tempwinMouseY = 0;
+let tempwinMouseX2 = 0;
+let tempwinMouseY2 = 0;
 let lineLayer, permaLine;
 let dotSize = 400;
 let dotQtyX, dotQtyY;
@@ -144,7 +144,7 @@ function touchMoved() {
 
   for (let i = 0; i < dotQtyX; i++) {
     for (let j = 0; j < dotQtyY; j++) {
-    dots[i][j].clicked(mouseX, mouseY);
+    dots[i][j].clicked(winMouseX, winMouseY);
   }
 }
   hueDrift = int(random(-2,2));
@@ -154,7 +154,7 @@ function touchMoved() {
   lineLayer.strokeWeight(5);
   lineLayer.clear();
   if (throughDotCount > 1){
-  lineLayer.line(tempMouseX, tempMouseY, mouseX, mouseY);
+  lineLayer.line(tempwinMouseX, tempwinMouseY, winMouseX, winMouseY);
 }
 return false;
 }
@@ -163,7 +163,7 @@ function copyLine() {
   permaLine.stroke(colHue+hueDrift, colSat+hueDrift, colBri+brightDrift, 80);
   permaLine.strokeWeight(6);
   if (throughDotCount > 2) {
-    permaLine.line(tempMouseX, tempMouseY, tempMouseX2, tempMouseY2);
+    permaLine.line(tempwinMouseX, tempwinMouseY, tempwinMouseX2, tempwinMouseY2);
   }
 }
 
@@ -206,10 +206,10 @@ class Dot {
       this.b = colBri+brightDrift;
 
       throughDotCount++;
-      tempMouseX2 = tempMouseX;
-      tempMouseY2 = tempMouseY;
-      tempMouseX = this.x;
-      tempMouseY = this.y;
+      tempwinMouseX2 = tempwinMouseX;
+      tempwinMouseY2 = tempwinMouseY;
+      tempwinMouseX = this.x;
+      tempwinMouseY = this.y;
       copyLine();
 
 
