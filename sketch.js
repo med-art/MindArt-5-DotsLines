@@ -4,7 +4,7 @@ let tempwinMouseY = 0;
 let tempwinMouseX2 = 0;
 let tempwinMouseY2 = 0;
 let lineLayer, permaLine;
-let dotSize = 280;
+let dotSize = 180;
 let dotQtyX, dotQtyY;
 let spaceX, spaceY;
 let noiseAmplification = 0;
