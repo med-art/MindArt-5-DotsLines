@@ -137,7 +137,7 @@ function mousePressed() {
   }
 
 
-function mouseDragged() {
+function touchMoved() {
 
   for (let i = 0; i < dotQtyX; i++) {
     for (let j = 0; j < dotQtyY; j++) {
@@ -164,7 +164,7 @@ function copyLine() {
   }
 }
 
-function mouseReleased() {
+function touchEnded() {
   lineLayer.clear();
   throughDotCount = 0;
 
