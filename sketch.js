@@ -18,6 +18,8 @@ let cloudHSB = [
   [11, 47, 65]
 ];
 
+let colHue, colSat, colBri;
+
 function preload() {
 
 bg = loadImage('assets/paper.jpg');
@@ -130,7 +132,7 @@ background(10);
   image(permaLine, 0, 0);
 }
 
-function touchMoved() {
+function touchStarted() {
 
       let swatchTemp = int(random(0,5));
       colHue = cloudHSB[swatchTemp][0];
