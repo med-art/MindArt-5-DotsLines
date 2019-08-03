@@ -201,7 +201,7 @@ class Dot {
 
   clicked(x, y) {
     let d = dist(x, y, this.x, this.y);
-    if (d < this.r*2) {
+    if (d < this.r*4) {
       this.brightness = 250;
       this.h = colHue+hueDrift;
       this.s = colSat+satDrift;
