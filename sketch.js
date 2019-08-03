@@ -9,7 +9,7 @@ let dotQtyX, dotQtyY;
 let spaceX, spaceY;
 let noiseAmplification = 0;
 let hueDrift, brightDrift, satDrift;
-let throughDotCount;
+let throughDotCount = 0;
 let cloudHSB = [
   [225, 47, 55],
   [56, 92, 95],
@@ -59,7 +59,7 @@ function writeTextUI() {
   button1.style('color', 'white');
   button1.style('border-radius', '0.5vmax')
   button1.style('width', '14vmax')
-  button1.mousePressed(setup);
+  button1.mousePressed(restart);
 
   button2.style('background-color', colH2);
   button2.style('font-size', '2.1vmax');
@@ -71,6 +71,11 @@ function writeTextUI() {
   }
 
 
+function restart(){
+
+  noiseAmplification = 0;
+  setup();
+}
 
 
 function dimensionCalc() {
@@ -201,17 +206,19 @@ class Dot {
 
   clicked(x, y) {
     let d = dist(x, y, this.x, this.y);
-    if (d < this.r*4) {
+    if (d < this.r*2.5) {
+      tempwinMouseX2 = tempwinMouseX;
+      tempwinMouseY2 = tempwinMouseY;
+      tempwinMouseX = this.x;
+      tempwinMouseY = this.y;
+        throughDotCount++;
       this.brightness = 250;
       this.h = colHue+hueDrift;
       this.s = colSat+satDrift;
       this.b = colBri+brightDrift;
 
-      throughDotCount++;
-      tempwinMouseX2 = tempwinMouseX;
-      tempwinMouseY2 = tempwinMouseY;
-      tempwinMouseX = this.x;
-      tempwinMouseY = this.y;
+
+
       copyLine();
 
 
