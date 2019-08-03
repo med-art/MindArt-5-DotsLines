@@ -28,6 +28,7 @@ function setup() {
 
 
   createCanvas(windowWidth, windowHeight);
+  pixelDensity(1); // Ignores retina displays
   lineLayer = createGraphics(width, height);
   permaLine = createGraphics(width, height);
   colorMode(HSB, 360, 100, 100, 100);
@@ -85,7 +86,8 @@ function dimensionCalc() {
 }
 
 function makeGrid(x, y, noise) {
- image(bg, 0, 0, width, height);
+// image(bg, 0, 0, width, height);
+background(50);
   dotQtyX = x;
   dotQtyY = y;
   noiseAmp = noise;
@@ -116,7 +118,8 @@ noiseAmplification++;
 }
 
 function draw() {
-image(bg, 0, 0, width, height);
+//image(bg, 0, 0, width, height);
+background(50);
   for (let i = 0; i < dotQtyX; i++) {
     for (let j = 0; j < dotQtyY; j++) {
     dots[i][j].move();
