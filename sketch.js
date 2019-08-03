@@ -35,7 +35,7 @@ function setup() {
   lineLayer.colorMode(HSB, 360, 100, 100, 100);
     permaLine.colorMode(HSB, 360, 100, 100, 100);
   dimensionCalc();
-  writeTextUI();
+  //writeTextUI();
   makeGrid(2,2,0);
 
 }
