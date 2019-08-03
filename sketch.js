@@ -130,7 +130,7 @@ background(10);
   image(permaLine, 0, 0);
 }
 
-function mousePressed() {
+function touchMoved() {
 
       let swatchTemp = int(random(0,5));
       colHue = cloudHSB[swatchTemp][0];
@@ -171,7 +171,7 @@ function touchEnded() {
   lineLayer.clear();
   throughDotCount = 0;
 
-  return false;
+
 }
 
 class Dot {
