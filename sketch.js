@@ -4,7 +4,7 @@ let tempwinMouseY = 0;
 let tempwinMouseX2 = 0;
 let tempwinMouseY2 = 0;
 let lineLayer, permaLine;
-let dotSize = 400;
+let dotSize = 280;
 let dotQtyX, dotQtyY;
 let spaceX, spaceY;
 let noiseAmplification = 0;
@@ -35,7 +35,7 @@ function setup() {
   lineLayer.colorMode(HSB, 360, 100, 100, 100);
     permaLine.colorMode(HSB, 360, 100, 100, 100);
   dimensionCalc();
-  //writeTextUI();
+  writeTextUI();
   makeGrid(2,2,0);
 
 }
