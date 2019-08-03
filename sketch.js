@@ -87,7 +87,7 @@ function dimensionCalc() {
 
 function makeGrid(x, y, noise) {
 // image(bg, 0, 0, width, height);
-background(20);
+background(10);
   dotQtyX = x;
   dotQtyY = y;
   noiseAmp = noise;
@@ -119,7 +119,7 @@ noiseAmplification++;
 
 function draw() {
 //image(bg, 0, 0, width, height);
-background(20);
+background(10);
   for (let i = 0; i < dotQtyX; i++) {
     for (let j = 0; j < dotQtyY; j++) {
     dots[i][j].move();
