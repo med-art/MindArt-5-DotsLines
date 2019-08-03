@@ -153,7 +153,7 @@ function mouseDragged() {
   if (throughDotCount > 1){
   lineLayer.line(tempMouseX, tempMouseY, mouseX, mouseY);
 }
-
+return false;
 }
 
 function copyLine() {
