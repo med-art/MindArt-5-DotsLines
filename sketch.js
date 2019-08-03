@@ -167,6 +167,8 @@ function copyLine() {
 function mouseReleased() {
   lineLayer.clear();
   throughDotCount = 0;
+
+  return false;
 }
 
 class Dot {
