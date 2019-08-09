@@ -4,7 +4,7 @@ let tempwinMouseY = 0;
 let tempwinMouseX2 = 0;
 let tempwinMouseY2 = 0;
 let lineLayer, permaLine;
-let dotSize = 300;
+let dotSize = 240;
 let dotQtyX = 2,
   dotQtyY = 2;
 let spaceX, spaceY;
@@ -117,7 +117,7 @@ function stage2grid() {
   }
 
 else if (stage === 4) {
-    dotQtyX = 3;
+    dotQtyX = 2;
     dotQtyY = 5*4;
     r = longEdge/30;
     let spaceX = width/dotQtyX+1;
@@ -136,8 +136,8 @@ else if (stage === 4) {
   }
 
   else if (stage === 5) {
-    dotQtyX = 9;
-    dotQtyY = 11*4;
+    dotQtyX = 7;
+    dotQtyY = 9*4;
     r = longEdge/30;
     let spaceX = width/dotQtyX+1;
     let spaceY = height/dotQtyY+1;
@@ -157,9 +157,9 @@ else if (stage === 4) {
 
 function stage3grid() {
 if (stage === 6){
-  x = 5;
-  y = 5;
-  noiseAmp = 6;
+  x = 7;
+  y = 7;
+  noiseAmp = 8;
 }
 
 else if (stage === 7){
@@ -176,7 +176,7 @@ else if (stage === 7){
     for (let j = 0; j < dotQtyY; j++) {
       let noiseX = int((random(-width, width) * noiseAmp) / 150);
       let noiseY = int((random(-height, height) * noiseAmp) / 150);
-      let r = random((width / dotSize), (width / dotSize) * 4);
+      let r = random((width / dotSize), (width / dotSize) * 3);
       dots[i][j] = new Dot(noiseX + (spaceX * 1.5) + (spaceX * i), noiseY + (spaceY * 1.5) + (spaceY * j), r);
     }
       noiseAmp++;
