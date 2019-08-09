@@ -136,7 +136,7 @@ else if (stage === 4) {
   }
 
   else if (stage === 5) {
-    dotQtyX = 5;
+    dotQtyX = 3;
     dotQtyY = 9*4;
     r = longEdge/30;
     let spaceX = width/dotQtyX+1;
