@@ -33,6 +33,7 @@ function writeTextUI() {
     fill(0);
     noStroke();
 
+    button2.remove();
     button2 = createButton('Start Over');
     button2.position(windowWidth - (10 * lmax) - (lmax * 10), windowHeight - lmax * 6);
     colH2 = color(10, 80, 50);
@@ -49,6 +50,7 @@ function writeTextUI() {
 
   function restart(){
     noiseAmplification = 0;
+        stage = 0;
     setup();
-    stage = 0;
+
   }

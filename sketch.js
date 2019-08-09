@@ -163,7 +163,7 @@ if (stage === 6){
   dotSize =4;
 }
 
-else if (stage === 7){
+else if (stage === 8){
   writeRestartUI();
 }
 
@@ -306,7 +306,7 @@ class Dot {
 
 
     let d = dist(x, y, this.x, this.y);
-    if (d < this.r * 2.5 && (this.x != verifyX || this.y != verifyY)) {
+    if (d < this.r * 4 && (this.x != verifyX || this.y != verifyY)) {
         colHue = this.h;
 
 
@@ -316,7 +316,7 @@ class Dot {
 
   clicked(x, y) {
     let d = dist(x, y, this.x, this.y);
-    if (d < this.r * 2.5 && (this.x != verifyX || this.y != verifyY)) {
+    if (d < this.r * 4 && (this.x != verifyX || this.y != verifyY)) {
       verifyX = this.x;
       verifyY = this.y;
       tempwinMouseX2 = tempwinMouseX;
