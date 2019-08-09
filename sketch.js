@@ -4,7 +4,7 @@ let tempwinMouseY = 0;
 let tempwinMouseX2 = 0;
 let tempwinMouseY2 = 0;
 let lineLayer, permaLine;
-let dotSize = 240;
+let dotSize = 4;
 let dotQtyX = 2,
   dotQtyY = 2;
 let spaceX, spaceY;
@@ -136,7 +136,7 @@ else if (stage === 4) {
   }
 
   else if (stage === 5) {
-    dotQtyX = 3;
+    dotQtyX = 4;
     dotQtyY = 13*4;
     r = longEdge/30;
     let spaceX = width/dotQtyX+1;
@@ -160,11 +160,13 @@ if (stage === 6){
   x = 7;
   y = 7;
   noiseAmp = 8;
+  dotSize =4;
 }
 
 else if (stage === 7){
   writeRestartUI();
 }
+
 
   dotQtyX = x;
   dotQtyY = y;
@@ -176,13 +178,16 @@ else if (stage === 7){
     for (let j = 0; j < dotQtyY; j++) {
       let noiseX = int((random(-width, width) * noiseAmp) / 150);
       let noiseY = int((random(-height, height) * noiseAmp) / 150);
-      let r = random((width / dotSize), (width / dotSize) * 3);
+      let r = random((lmax*(dotSize/10)), (lmax*(dotSize/10)) * 3);
       dots[i][j] = new Dot(noiseX + (spaceX * 1.5) + (spaceX * i), noiseY + (spaceY * 1.5) + (spaceY * j), r);
     }
-      noiseAmp++;
-      x++;
-      y++;
+
   }
+  noiseAmp+=10;
+  x+=10;
+  y+=10;
+  dotSize--;
+  console.log(dotSize);
 }
 
 function nextGrid() {
