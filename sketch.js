@@ -111,7 +111,7 @@ function stage2grid() {
     for (let i = 0; i < dotQtyX; i++) {
       dots[i] = [];
       for (let j = 0; j < dotQtyY; j++) {
-        dots[i][j] = new Dot((i+1)*(spaceX), (j+1)*(spaceY), 10);
+        dots[i][j] = new Dot((i+1)*(spaceX), (j+1)*(spaceY), 12);
       }
     }
   }
@@ -126,18 +126,18 @@ else if (stage === 4) {
     for (let i = 0; i < dotQtyX; i++) {
       dots[i] = [];
       for (let j = 0; j < dotQtyY; j+=4) {
-        dots[i][j] = new Dot(((i+0.5)*(spaceX))-(spaceX/6), (j+0.5)*(spaceY), 10);
-        dots[i][j+1] = new Dot(((i+0.5)*(spaceX))+(spaceX/6), (j+0.5)*(spaceY), 10);
+        dots[i][j] = new Dot(((i+0.5)*(spaceX))-(spaceX/6), (j+0.5)*(spaceY), 11);
+        dots[i][j+1] = new Dot(((i+0.5)*(spaceX))+(spaceX/6), (j+0.5)*(spaceY), 11);
 
-        dots[i][j+2] = new Dot(((i+0.5)*(spaceX))-(spaceX/3), (j+0.5)*(spaceY)+(spaceY*2), 10);
-        dots[i][j+3] = new Dot(((i+0.5)*(spaceX))+((spaceX/6)*2), (j+0.5)*(spaceY)+(spaceY*2), 10);
+        dots[i][j+2] = new Dot(((i+0.5)*(spaceX))-(spaceX/3), (j+0.5)*(spaceY)+(spaceY*2), 11);
+        dots[i][j+3] = new Dot(((i+0.5)*(spaceX))+((spaceX/6)*2), (j+0.5)*(spaceY)+(spaceY*2), 11);
       }
     }
   }
 
   else if (stage === 5) {
     dotQtyX = 3;
-    dotQtyY = 9*4;
+    dotQtyY = 13*4;
     r = longEdge/30;
     let spaceX = width/dotQtyX+1;
     let spaceY = height/dotQtyY+1;
@@ -145,11 +145,11 @@ else if (stage === 4) {
     for (let i = 0; i < dotQtyX; i++) {
       dots[i] = [];
       for (let j = 0; j < dotQtyY; j+=4) {
-        dots[i][j] = new Dot(((i+0.5)*(spaceX))-(spaceX/6), (j+0.5)*(spaceY), 10);
-        dots[i][j+1] = new Dot(((i+0.5)*(spaceX))+(spaceX/6), (j+0.5)*(spaceY), 10);
+        dots[i][j] = new Dot(((i+0.5)*(spaceX))-(spaceX/6), (j+0.5)*(spaceY), 8);
+        dots[i][j+1] = new Dot(((i+0.5)*(spaceX))+(spaceX/6), (j+0.5)*(spaceY), 8);
 
-        dots[i][j+2] = new Dot(((i+0.5)*(spaceX))-(spaceX/3), (j+0.5)*(spaceY)+(spaceY*2), 10);
-        dots[i][j+3] = new Dot(((i+0.5)*(spaceX))+((spaceX/6)*2), (j+0.5)*(spaceY)+(spaceY*2), 10);
+        dots[i][j+2] = new Dot(((i+0.5)*(spaceX))-(spaceX/3), (j+0.5)*(spaceY)+(spaceY*2), 8);
+        dots[i][j+3] = new Dot(((i+0.5)*(spaceX))+((spaceX/6)*2), (j+0.5)*(spaceY)+(spaceY*2), 8);
       }
     }
   }
