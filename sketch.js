@@ -4,8 +4,9 @@ let tempwinMouseY = 0;
 let tempwinMouseX2 = 0;
 let tempwinMouseY2 = 0;
 let lineLayer, permaLine;
-let dotSize = 180;
-let dotQtyX, dotQtyY;
+let dotSize = 300;
+let dotQtyX = 2,
+  dotQtyY = 2;
 let spaceX, spaceY;
 let noiseAmplification = 0;
 let hueDrift, brightDrift, satDrift;
@@ -18,11 +19,29 @@ let cloudHSB = [
   [11, 47, 65]
 ];
 
-let colHue, colSat, colBri;
+let primaryArray = [360, 60, 240];
+
+let stage1array = [
+  [1, 1, 4, 1, 1, 3, 4, 3, 1, 5, 4, 5, 1, 7, 4, 7],
+  [1, 1, 2, 1, 3, 1, 4, 1, 1, 3, 4, 3, 1, 5, 4, 5, 1, 7, 2, 7, 3, 7, 4, 7],
+  [1, 1, 3, 1, 2, 2, 4, 2, 1, 3, 3, 3, 2, 4, 4, 4, 1, 5, 3, 5, 2, 6, 4, 6, 1, 7, 3, 7, 2, 8, 4, 8]
+];
+
+// NB stage 1 array is in a 4 x 8 grid system
+
+let colHue = 360, colSat = 100, colBri = 100;
+let stage = 0;
+
+let dotsCount = 0;
+let hueCapture = 0;
+let verifyX = 0;
+let verifyY = 0;
 
 function preload() {
 
-bg = loadImage('assets/paper.jpg');
+  bg = loadImage('assets/paper.jpg');
+
+  audio = loadSound('assets/audio.mp3');
 
 }
 
@@ -35,48 +54,13 @@ function setup() {
   permaLine = createGraphics(width, height);
   colorMode(HSB, 360, 100, 100, 100);
   lineLayer.colorMode(HSB, 360, 100, 100, 100);
-    permaLine.colorMode(HSB, 360, 100, 100, 100);
+  permaLine.colorMode(HSB, 360, 100, 100, 100);
   dimensionCalc();
   writeTextUI();
-  makeGrid(2,2,0);
+  nextGrid();
+  //stage3grid(2,2,0);
 
 }
-
-function writeTextUI() {
-  textSize(longEdge / 50);
-  fill(0);
-  noStroke();
-
-  button1 = createButton('Restart');
-  button1.position((10 * lmax), windowHeight - lmax * 6);
-  button2 = createButton('Next');
-  button2.position(windowWidth - (10 * lmax) - (lmax * 10), windowHeight - lmax * 6);
-  colH2 = color(130, 50, 50);
-  colH1 = color(355, 50, 50);
-
-  button1.style('background-color', colH1);
-  button1.style('font-size', '2.1vmax');
-  button1.style('color', 'white');
-  button1.style('border-radius', '0.5vmax')
-  button1.style('width', '14vmax')
-  button1.mousePressed(restart);
-
-  button2.style('background-color', colH2);
-  button2.style('font-size', '2.1vmax');
-  button2.style('color', 'white');
-  button2.style('border-radius', '0.5vmax')
-  button2.style('width', '14vmax')
-  button2.mousePressed(nextGrid);
-
-  }
-
-
-function restart(){
-
-  noiseAmplification = 0;
-  setup();
-}
-
 
 function dimensionCalc() {
   wmax = width / 100;
@@ -92,84 +76,194 @@ function dimensionCalc() {
   }
 }
 
-function makeGrid(x, y, noise) {
-// image(bg, 0, 0, width, height);
-background(10);
-  dotQtyX = x;
-  dotQtyY = y;
-  noiseAmp = noise;
-  spaceX = width/(dotQtyX+2);
-  spaceY = height/(dotQtyY+2);
-  permaLine.clear();
+function stage1grid() {
 
+  dots[0] = [];
+  let w = width / 5;
+  let h = height / 9;
+  let r = longEdge / 50;
 
+  dotQtyX = 1;
+  dotQtyY = stage1array[stage].length / 2;
 
-  for (let i = 0; i < dotQtyX; i++) {
-   dots[i] = [];
-    for (let j = 0; j < dotQtyY; j++) {
-      let noiseX = int((random(-width, width)*noise)/150);
-      let noiseY = int((random(-height, height)*noise)/150);
-      let r = random((width/dotSize), (width/dotSize)*4);
-      dots[i][j] = new Dot(noiseX+(spaceX*1.5)+(spaceX*i), noiseY+(spaceY*1.5)+(spaceY*j), r);
+  // there is a big issues with this. the way the array was written for stage 3 meant x and y coordinates stored in an array.
+  // that is no longer happening with stage 1 and 2, which are stored in address 0 as (x,y,x,y,x,y etc).
+  // For resolution at a later date.
+
+  console.log(stage1array);
+
+  for (let i = 0; i < stage1array[stage].length; i += 2) {
+    dots[0][i / 2] = new Dot(stage1array[stage][i] * w, stage1array[stage][i + 1] * h, r);
+  }
+
+}
+
+function stage2grid() {
+
+  if (stage === 3) {
+
+    dotQtyX = 7;
+    dotQtyY = 9;
+    r = longEdge/30;
+    let spaceX = width/dotQtyX+1;
+    let spaceY = height/dotQtyY+1;
+
+    for (let i = 0; i < dotQtyX; i++) {
+      dots[i] = [];
+      for (let j = 0; j < dotQtyY; j++) {
+        dots[i][j] = new Dot((i+1)*(spaceX), (j+1)*(spaceY), 10);
+      }
+    }
+  }
+
+else if (stage === 4) {
+    dotQtyX = 3;
+    dotQtyY = 5*4;
+    r = longEdge/30;
+    let spaceX = width/dotQtyX+1;
+    let spaceY = height/dotQtyY+1;
+
+    for (let i = 0; i < dotQtyX; i++) {
+      dots[i] = [];
+      for (let j = 0; j < dotQtyY; j+=4) {
+        dots[i][j] = new Dot(((i+0.5)*(spaceX))-(spaceX/6), (j+0.5)*(spaceY), 10);
+        dots[i][j+1] = new Dot(((i+0.5)*(spaceX))+(spaceX/6), (j+0.5)*(spaceY), 10);
+
+        dots[i][j+2] = new Dot(((i+0.5)*(spaceX))-(spaceX/3), (j+0.5)*(spaceY)+(spaceY*2), 10);
+        dots[i][j+3] = new Dot(((i+0.5)*(spaceX))+((spaceX/6)*2), (j+0.5)*(spaceY)+(spaceY*2), 10);
+      }
+    }
+  }
+
+  else if (stage === 5) {
+    dotQtyX = 9;
+    dotQtyY = 11*4;
+    r = longEdge/30;
+    let spaceX = width/dotQtyX+1;
+    let spaceY = height/dotQtyY+1;
+
+    for (let i = 0; i < dotQtyX; i++) {
+      dots[i] = [];
+      for (let j = 0; j < dotQtyY; j+=4) {
+        dots[i][j] = new Dot(((i+0.5)*(spaceX))-(spaceX/6), (j+0.5)*(spaceY), 10);
+        dots[i][j+1] = new Dot(((i+0.5)*(spaceX))+(spaceX/6), (j+0.5)*(spaceY), 10);
+
+        dots[i][j+2] = new Dot(((i+0.5)*(spaceX))-(spaceX/3), (j+0.5)*(spaceY)+(spaceY*2), 10);
+        dots[i][j+3] = new Dot(((i+0.5)*(spaceX))+((spaceX/6)*2), (j+0.5)*(spaceY)+(spaceY*2), 10);
+      }
     }
   }
 }
 
-function nextGrid(){
+function stage3grid() {
+if (stage === 6){
+  x = 5;
+  y = 5;
+  noiseAmp = 6;
+}
 
-dotQtyX++;
-dotQtyY++;
-dotSize+=10;
-noiseAmplification++;
-  makeGrid(dotQtyX, dotQtyY, noiseAmplification);
+else if (stage === 7){
+  writeRestartUI();
+}
+
+  dotQtyX = x;
+  dotQtyY = y;
+  spaceX = width / (dotQtyX + 2);
+  spaceY = height / (dotQtyY + 2);
+
+  for (let i = 0; i < dotQtyX; i++) {
+    dots[i] = [];
+    for (let j = 0; j < dotQtyY; j++) {
+      let noiseX = int((random(-width, width) * noiseAmp) / 150);
+      let noiseY = int((random(-height, height) * noiseAmp) / 150);
+      let r = random((width / dotSize), (width / dotSize) * 4);
+      dots[i][j] = new Dot(noiseX + (spaceX * 1.5) + (spaceX * i), noiseY + (spaceY * 1.5) + (spaceY * j), r);
+    }
+      noiseAmp++;
+      x++;
+      y++;
+  }
+}
+
+function nextGrid() {
+
+  // note stages are 3 sets of 3. i.e. [0, 1, 2],[3, 4, 5],[6, 7, 8]
+  permaLine.clear();
+
+
+  if (stage < 3) {
+    stage1grid();
+  } else if (stage >= 3 && stage < 6) {
+    stage2grid();
+  } else if (stage >= 6){
+
+
+    stage3grid();
+  }
+
+  stage++;
+
+
 }
 
 function draw() {
-//image(bg, 0, 0, width, height);
-background(10);
+  image(bg, 0, 0, width, height);
+
   for (let i = 0; i < dotQtyX; i++) {
     for (let j = 0; j < dotQtyY; j++) {
-    dots[i][j].move();
-    dots[i][j].show();
+      //dots[i][j].move();
+      dots[i][j].show();
+    }
   }
-}
   image(lineLayer, 0, 0);
   image(permaLine, 0, 0);
 }
 
 function touchStarted() {
 
-      let swatchTemp = int(random(0,5));
-      colHue = cloudHSB[swatchTemp][0];
-      colSat = cloudHSB[swatchTemp][1];
-      colBri = cloudHSB[swatchTemp][2];
-
+  for (let i = 0; i < dotQtyX; i++) {
+    for (let j = 0; j < dotQtyY; j++) {
+      dots[i][j].getCol(winMouseX, winMouseY);
+    }
   }
+
+  if (audio.isPlaying()) {
+
+  } else {
+    audio.play();
+  }
+
+  // let swatchTemp = int(random(0, 5));
+  // colHue = cloudHSB[swatchTemp][0];
+  // colSat = cloudHSB[swatchTemp][1];
+  // colBri = cloudHSB[swatchTemp][2];
+
+}
 
 
 function touchMoved() {
 
   for (let i = 0; i < dotQtyX; i++) {
     for (let j = 0; j < dotQtyY; j++) {
-    dots[i][j].clicked(winMouseX, winMouseY);
+      dots[i][j].clicked(winMouseX, winMouseY);
+    }
   }
-}
-  hueDrift = int(random(-2,2));
-  satDrift = int(random(-2,2));
-  brightDrift = int(random(-2,2));
-  lineLayer.stroke(colHue+hueDrift, colSat+satDrift, colBri+brightDrift, 80);
+  hueDrift = int(random(-2, 2));
+  satDrift = int(random(-2, 2));
+  brightDrift = int(random(-2, 2));
+  lineLayer.stroke(colHue + hueDrift, colSat + satDrift, colBri + brightDrift, 80);
   lineLayer.strokeWeight(5);
   lineLayer.clear();
-  if (throughDotCount > 1){
-  lineLayer.line(tempwinMouseX, tempwinMouseY, winMouseX, winMouseY);
-}
-return false;
+  if (throughDotCount > 0) {
+    lineLayer.line(tempwinMouseX, tempwinMouseY, winMouseX, winMouseY);
+  }
+  return false;
 }
 
 function copyLine() {
-  permaLine.stroke(colHue+hueDrift, colSat+hueDrift, colBri+brightDrift, 80);
+  permaLine.stroke(colHue + hueDrift, colSat + hueDrift, colBri + brightDrift, 80);
   permaLine.strokeWeight(6);
-  if (throughDotCount > 2) {
+  if (throughDotCount > 1) {
     permaLine.line(tempwinMouseX, tempwinMouseY, tempwinMouseX2, tempwinMouseY2);
   }
 }
@@ -177,7 +271,6 @@ function copyLine() {
 function touchEnded() {
   lineLayer.clear();
   throughDotCount = 0;
-
 
 }
 
@@ -187,9 +280,9 @@ class Dot {
     this.y = y;
     this.r = r;
     this.brightness = 150;
-    this.h = 0;
-    this.s = 0;
-    this.b = 80;
+    this.h = primaryArray[int(random(0,3))];
+    this.s = colSat;
+    this.b = colBri;
   }
 
   move() {
@@ -199,23 +292,55 @@ class Dot {
 
   show() {
     stroke(60);
-    strokeWeight(1);
+    strokeWeight(0);
     fill(this.h, this.s, this.b, 100);
     ellipse(this.x, this.y, this.r * 2);
   }
 
+  getCol(x, y){
+
+
+    let d = dist(x, y, this.x, this.y);
+    if (d < this.r * 2.5 && (this.x != verifyX || this.y != verifyY)) {
+        colHue = this.h;
+
+
+
+  }
+}
+
   clicked(x, y) {
     let d = dist(x, y, this.x, this.y);
-    if (d < this.r*2.5) {
+    if (d < this.r * 2.5 && (this.x != verifyX || this.y != verifyY)) {
+      verifyX = this.x;
+      verifyY = this.y;
       tempwinMouseX2 = tempwinMouseX;
       tempwinMouseY2 = tempwinMouseY;
       tempwinMouseX = this.x;
       tempwinMouseY = this.y;
-        throughDotCount++;
+      throughDotCount++;
       this.brightness = 250;
-      this.h = colHue+hueDrift;
-      this.s = colSat+satDrift;
-      this.b = colBri+brightDrift;
+
+      if (colHue != this.h){
+        if (abs(colHue - this.h) > 280){
+          this.h = (((this.h + colHue)/2)-180)%360;;
+        }
+
+        else
+        {
+          this.h = ((this.h + colHue)/2)%360;;
+        }
+      }
+
+
+      colHue = this.h;
+      this.s = colSat;
+      this.b = colBri;
+
+
+      dotsCount++;
+      console.log(abs(colHue - this.h) > 180);
+      console.log(this.h);
 
 
 
