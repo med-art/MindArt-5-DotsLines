@@ -19,6 +19,7 @@ let cloudHSB = [
   [11, 47, 65]
 ];
 
+let introState = 1;
 let primaryArray = [360, 60, 240];
 
 let stage1array = [
@@ -56,9 +57,8 @@ function setup() {
   lineLayer.colorMode(HSB, 360, 100, 100, 100);
   permaLine.colorMode(HSB, 360, 100, 100, 100);
   dimensionCalc();
-  writeTextUI();
-  nextGrid();
-  //stage3grid(2,2,0);
+  showIntro();
+
 
 }
 
@@ -212,6 +212,7 @@ function nextGrid() {
 }
 
 function draw() {
+  if (introState === 0){
   image(bg, 0, 0, width, height);
 
 
@@ -224,20 +225,24 @@ function draw() {
     }
   }
 }
+}
 
 function touchStarted() {
+
+  if (introState === 1 && textStroke === 10){
+    exitIntro();
+    audio.loop();
+  }
+
+  else {
 
   for (let i = 0; i < dotQtyX; i++) {
     for (let j = 0; j < dotQtyY; j++) {
       dots[i][j].getCol(winMouseX, winMouseY);
     }
   }
+}
 
-  if (audio.isPlaying()) {
-
-  } else {
-    audio.play();
-  }
 
   // let swatchTemp = int(random(0, 5));
   // colHue = cloudHSB[swatchTemp][0];

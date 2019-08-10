@@ -50,12 +50,14 @@ button4.mousePressed(saveImage);
     }
 
 
-  function restart(){
-    noiseAmplification = 0;
-        stage = 0;
-    setup();
+    function restart() {
+      stage = 0;
+      introState = 0;
+      dimensionCalc();
+      writeTextUI();
+      nextGrid();
 
-  }
+    }
 
   function saveImage(){
     save('dreamscape'+month()+day()+hour()+second()+'.jpg');
