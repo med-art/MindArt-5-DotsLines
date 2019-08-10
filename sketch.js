@@ -214,14 +214,15 @@ function nextGrid() {
 function draw() {
   image(bg, 0, 0, width, height);
 
+
+  image(lineLayer, 0, 0);
+  image(permaLine, 0, 0);
   for (let i = 0; i < dotQtyX; i++) {
     for (let j = 0; j < dotQtyY; j++) {
       //dots[i][j].move();
       dots[i][j].show();
     }
   }
-  image(lineLayer, 0, 0);
-  image(permaLine, 0, 0);
 }
 
 function touchStarted() {
