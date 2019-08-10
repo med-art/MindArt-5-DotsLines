@@ -90,7 +90,6 @@ function stage1grid() {
   // that is no longer happening with stage 1 and 2, which are stored in address 0 as (x,y,x,y,x,y etc).
   // For resolution at a later date.
 
-  console.log(stage1array);
 
   for (let i = 0; i < stage1array[stage].length; i += 2) {
     dots[0][i / 2] = new Dot(stage1array[stage][i] * w, stage1array[stage][i + 1] * h, r);
@@ -178,7 +177,7 @@ else if (stage === 8){
     for (let j = 0; j < dotQtyY; j++) {
       let noiseX = int((random(-width, width) * noiseAmp) / 150);
       let noiseY = int((random(-height, height) * noiseAmp) / 150);
-      let r = random((lmax*(dotSize/10)), (lmax*(dotSize/10)) * 3);
+      let r = random((lmax*(dotSize/10)), (lmax*(dotSize/10)) * 2);
       dots[i][j] = new Dot(noiseX + (spaceX * 1.5) + (spaceX * i), noiseY + (spaceY * 1.5) + (spaceY * j), r);
     }
 
@@ -187,7 +186,7 @@ else if (stage === 8){
   x+=10;
   y+=10;
   dotSize--;
-  console.log(dotSize);
+
 }
 
 function nextGrid() {
@@ -229,7 +228,7 @@ function draw() {
 
 function touchStarted() {
 
-  if (introState === 1 && textStroke === 10){
+  if (introState === 1 && textStroke === 80){
     exitIntro();
     audio.loop();
   }
@@ -244,10 +243,7 @@ function touchStarted() {
 }
 
 
-  // let swatchTemp = int(random(0, 5));
-  // colHue = cloudHSB[swatchTemp][0];
-  // colSat = cloudHSB[swatchTemp][1];
-  // colBri = cloudHSB[swatchTemp][2];
+
 
 }
 
@@ -350,8 +346,6 @@ class Dot {
 
 
       dotsCount++;
-      console.log(abs(colHue - this.h) > 180);
-      console.log(this.h);
 
 
 
