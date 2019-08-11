@@ -72,7 +72,7 @@ function writeRestartUI() {
 
 function restart() {
   stage = 0;
-  button1.position(-1000,-1000);
+  button1.position(-1000, -1000);
   button1.html("test");
   introState = 0;
   dimensionCalc();
@@ -86,19 +86,29 @@ function saveImage() {
   save('dreamscape' + month() + day() + hour() + second() + '.jpg');
 }
 
+
 function toggleColour() {
   colSwitch = !colSwitch;
+  changeColour(colSwitch);
 
-  if (colSwitch) {
+}
+
+function changeColour(tmp) {
+
+  if (tmp) {
     colSat = 80;
-    button1.html("Colour")
+    colBri = 100;
+
+    if (stage >= 7) {
+      button1.html("Colour")
+    }
+
   } else {
     colSat = 0;
-    button1.html("White")
+    colBri = 85;
+    if (stage >= 7) {
+      button1.html("White")
+    }
   }
-
-  console.log(colSat);
-  console.log(colSwitch);
-
 
 }

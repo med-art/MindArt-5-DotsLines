@@ -61,6 +61,7 @@ function setup() {
   showIntro();
 
 
+
 }
 
 function dimensionCalc() {
@@ -202,14 +203,17 @@ function nextGrid() {
 
   if (stage < 3) {
 
-    colSat = 80;
+  changeColour(1);
     stage1grid();
   } else if (stage >= 3 && stage < 6) {
     stage2grid();
   } else if (stage >= 6){
 
+changeColour(0);
 
-    colSat = 0;
+
+
+
     stage3grid();
 
   }
@@ -244,7 +248,7 @@ function draw() {
 
 function touchStarted() {
 
-  if (introState === 1 && textStroke === 80){
+  if (introState === 1 && textStroke === 10){
     exitIntro();
     audio.loop();
   }
@@ -270,7 +274,7 @@ function touchMoved() {
   hueDrift = int(random(-2, 2));
   satDrift = int(random(-2, 2));
   brightDrift = int(random(-2, 2));
-  lineLayer.stroke(colHue + hueDrift, colSat + satDrift, colBri + brightDrift, 80);
+  lineLayer.stroke(colHue + hueDrift, colSat + satDrift, 100, 80);
   lineLayer.strokeWeight(5);
   lineLayer.clear();
   if (throughDotCount > 0) {
@@ -280,7 +284,7 @@ function touchMoved() {
 }
 
 function copyLine() {
-  permaLine.stroke(colHue + hueDrift, colSat + hueDrift, colBri + brightDrift, 80);
+  permaLine.stroke(colHue + hueDrift, colSat + hueDrift, 100, 80);
   permaLine.strokeWeight(6);
   if (throughDotCount > 1) {
     permaLine.line(tempwinMouseX, tempwinMouseY, tempwinMouseX2, tempwinMouseY2);
@@ -310,8 +314,15 @@ class Dot {
   }
 
   show() {
-    stroke(60);
-    strokeWeight(0);
+  noStroke();
+
+
+    if (colSwitch){
+      this.b = 100;
+    }
+
+
+
     fill(this.h, this.s, this.b*0.9, 100);
     ellipse(this.x, this.y, this.r * 2);
     fill(this.h, this.s, this.b*0.925, 100);
@@ -324,14 +335,12 @@ class Dot {
 
   getCol(x, y){
 
-
     let d = dist(x, y, this.x, this.y);
     if (d < this.r * 4 && (this.x != verifyX || this.y != verifyY)) {
         colHue = this.h;
+        if (colSwitch){
         this.s = 80;
-
-
-
+      }
   }
 }
 
