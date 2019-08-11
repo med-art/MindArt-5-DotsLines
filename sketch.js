@@ -30,7 +30,7 @@ let stage1array = [
 
 // NB stage 1 array is in a 4 x 8 grid system
 
-let colHue = 360, colSat = 100, colBri = 100;
+let colHue = 360, colSat = 80, colBri = 100;
 let stage = 0;
 
 let dotsCount = 0;
@@ -78,6 +78,8 @@ function dimensionCalc() {
 }
 
 function stage1grid() {
+
+
 
   dots[0] = [];
   let w = width / 5;
@@ -162,6 +164,7 @@ if (stage === 6){
   y = 7;
   noiseAmp = 8;
   dotSize =4;
+  colToggleUI();
 }
 
 else if (stage === 8){
@@ -198,15 +201,17 @@ function nextGrid() {
 
 
   if (stage < 3) {
-    colSat = 255;
+
+    colSat = 80;
     stage1grid();
   } else if (stage >= 3 && stage < 6) {
     stage2grid();
   } else if (stage >= 6){
 
-  colToggleUI();
-      colSat = 0;
+
+    colSat = 0;
     stage3grid();
+
   }
 
   stage++;
@@ -307,14 +312,14 @@ class Dot {
   show() {
     stroke(60);
     strokeWeight(0);
-    fill(this.h, this.s, this.b, 100);
-    ellipse(this.x, this.y, this.r * 2);
-    fill(this.h, this.s, this.b*0.95, 100);
-    ellipse(this.x, this.y, this.r * 1.75);
     fill(this.h, this.s, this.b*0.9, 100);
-    ellipse(this.x, this.y, this.r * 1.5);
-    fill(this.h, this.s, this.b*0.85, 100);
-    ellipse(this.x, this.y, this.r * 1.25);
+    ellipse(this.x, this.y, this.r * 2);
+    fill(this.h, this.s, this.b*0.925, 100);
+    ellipse(this.x, this.y, this.r * 1.95);
+    fill(this.h, this.s, this.b*0.95, 100);
+    ellipse(this.x, this.y, this.r * 1.85);
+    fill(this.h, this.s, this.b*1, 100);
+    ellipse(this.x, this.y, this.r * 1.60);
   }
 
   getCol(x, y){
@@ -323,6 +328,7 @@ class Dot {
     let d = dist(x, y, this.x, this.y);
     if (d < this.r * 4 && (this.x != verifyX || this.y != verifyY)) {
         colHue = this.h;
+        this.s = 80;
 
 
 
