@@ -39,7 +39,7 @@ function colToggleUI() {
 
   // button1 = createButton('Restart');
   // button1.position((10 * lmax), windowHeight - lmax * 6);
-  button1 = createButton('Colour');
+  button1 = createButton('White');
   button1.position((lmax * 3), windowHeight - lmax * 5);
   colH1 = color(355, 70, 80);
 
@@ -89,11 +89,11 @@ function toggleColour() {
   colSwitch = !colSwitch;
 
   if (colSwitch) {
-    colSat = 0;
-    button1.html("White")
-  } else {
     colSat = 100;
     button1.html("Colour")
+  } else {
+    colSat = 0;
+    button1.html("White")
   }
 
   console.log(colSat);

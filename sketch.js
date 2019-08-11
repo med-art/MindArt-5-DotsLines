@@ -41,6 +41,7 @@ let verifyY = 0;
 function preload() {
 
   bg = loadImage('assets/paper.jpg');
+    bg2 = loadImage('assets/paper2.jpg');
 
   audio = loadSound('assets/audio.mp3');
 
@@ -155,6 +156,7 @@ else if (stage === 4) {
 }
 
 function stage3grid() {
+
 if (stage === 6){
   x = 7;
   y = 7;
@@ -196,12 +198,14 @@ function nextGrid() {
 
 
   if (stage < 3) {
+    colSat = 255;
     stage1grid();
   } else if (stage >= 3 && stage < 6) {
     stage2grid();
   } else if (stage >= 6){
 
-
+  colToggleUI();
+      colSat = 0;
     stage3grid();
   }
 
@@ -212,7 +216,14 @@ function nextGrid() {
 
 function draw() {
   if (introState === 0){
-  image(bg, 0, 0, width, height);
+
+  if (stage < 7){
+      image(bg, 0, 0, width, height);
+  }
+  else if (stage >= 7){
+        image(bg2, 0, 0, width, height);
+      }
+
 
 
   image(lineLayer, 0, 0);
@@ -241,10 +252,6 @@ function touchStarted() {
     }
   }
 }
-
-
-
-
 }
 
 
@@ -302,6 +309,12 @@ class Dot {
     strokeWeight(0);
     fill(this.h, this.s, this.b, 100);
     ellipse(this.x, this.y, this.r * 2);
+    fill(this.h, this.s, this.b*0.95, 100);
+    ellipse(this.x, this.y, this.r * 1.75);
+    fill(this.h, this.s, this.b*0.9, 100);
+    ellipse(this.x, this.y, this.r * 1.5);
+    fill(this.h, this.s, this.b*0.85, 100);
+    ellipse(this.x, this.y, this.r * 1.25);
   }
 
   getCol(x, y){
